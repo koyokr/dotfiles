@@ -2,7 +2,7 @@
 	helper = manager
 [user]
 	email = koyo@koyo.kr
-	name = koyo
+	name = Younghun Ko
 	signingkey = 76DF7746EF24F484
 [commit]
 	gpgsign = true

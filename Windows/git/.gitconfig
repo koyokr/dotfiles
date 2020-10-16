@@ -4,6 +4,8 @@
 	email = koyo@koyo.kr
 	name = Younghun Ko
 	signingkey = 76DF7746EF24F484
+[core]
+	quotePath = false
 [commit]
 	gpgsign = true
 [gpg]

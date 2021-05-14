@@ -1,5 +1,5 @@
 [credential]
-	helper = manager
+	helper = manager-core
 [user]
 	email = koyo@koyo.kr
 	name = Younghun Ko

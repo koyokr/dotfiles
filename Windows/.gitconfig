@@ -10,3 +10,5 @@
 	gpgsign = true
 [gpg]
 	program = C:\\ProgramData\\scoop\\apps\\gpg4win\\current\\GnuPG\\bin\\gpg.exe
+[init]
+	defaultBranch = master

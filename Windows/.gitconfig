@@ -8,13 +8,6 @@
 	program = C:\\ProgramData\\scoop\\apps\\gpg4win\\current\\GnuPG\\bin\\gpg.exe
 [init]
 	defaultBranch = master
-[interactive]
-    diffFilter = delta --color-only --features=interactive
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
 [user]
 	email = koyo@koyo.kr
 	name = Younghun Ko

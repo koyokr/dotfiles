@@ -8,3 +8,5 @@ function l { lsd @args }
 function la { lsd -a @args }
 function ll { lsd -l --blocks 'permission,size,date,name' --date '+%Y-%m-%d %H:%M' @args }
 function lla { ll -a @args }
+
+function activate { conda activate @args }

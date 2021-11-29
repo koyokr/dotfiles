@@ -7,7 +7,7 @@
         "defaults": {
             "colorScheme": "Tango Dark",
             "font": {
-                "face": "Delugia"
+                "face": "Delugia Mono"
             },
             "historySize": 20000
         },

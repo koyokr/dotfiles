@@ -1,5 +1,4 @@
 Invoke-Expression (&starship init powershell)
-Invoke-Expression (&{(zoxide init --hook pwd powershell) -join "`n"})
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineOption -BellStyle None -PredictionSource History

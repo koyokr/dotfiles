@@ -2,13 +2,11 @@
 	gpgsign = true
 [core]
 	quotePath = false
-[credential "helperselector"]
-	selected = manager-core
 [gpg]
 	program = C:\\ProgramData\\scoop\\apps\\gpg4win\\current\\GnuPG\\bin\\gpg.exe
-[init]
-	defaultBranch = master
 [user]
 	email = koyo@koyo.kr
 	name = Younghun Ko
-	signingkey = 76DF7746EF24F484
+	signingkey = 37DE987257F6ECAC
+[credential "helperselector"]
+	selected = manager

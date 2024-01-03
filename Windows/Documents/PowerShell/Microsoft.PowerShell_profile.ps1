@@ -1,11 +1,16 @@
-Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadLineOption -BellStyle None -PredictionSource History
-
+# starship
 function Invoke-Starship-PreCommand { $Host.UI.RawUI.WindowTitle = $PWD.ToString().Replace($HOME, '~').Replace('\', '/') }
 Invoke-Expression (&starship init powershell)
 
-Set-Alias -Name l -Value lsd
-function la { l -a @args }
+# scoop
+Invoke-Expression (&scoop-search --hook)
+
+# zoxide
+Invoke-Expression (&{zoxide init --hook 'pwd' powershell | Out-String})
+
+# psfzf
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
+
+# lsd
+function l { lsd -a @args }
 function ll { l -l --blocks 'permission,size,date,name' --date '+%Y-%m-%d %H:%M' @args }
-function lla { ll -a @args }
-function lt { lsd --tree -depth @args }

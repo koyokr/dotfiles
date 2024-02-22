@@ -2,11 +2,29 @@
 	gpgsign = true
 [core]
 	quotePath = false
+	pager = delta
+[credential "helperselector"]
+	selected = manager
+[delta]
+	navigate = true
+	light = false
+[diff]
+	algorithm = histogram
+	colorMoved = default
 [gpg]
 	program = C:\\ProgramData\\scoop\\apps\\gpg4win\\current\\GnuPG\\bin\\gpg.exe
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = diff3
+[pull]
+	rebase = true
+[rebase]
+	autosquash = true
+	autostash = true
 [user]
 	email = koyo@koyo.kr
 	name = Younghun Ko
 	signingkey = 37DE987257F6ECAC
-[credential "helperselector"]
-	selected = manager

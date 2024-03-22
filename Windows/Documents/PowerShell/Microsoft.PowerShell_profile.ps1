@@ -12,5 +12,6 @@ Invoke-Expression (&{zoxide init --hook 'pwd' powershell | Out-String})
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 # lsd
-function l { lsd -a @args }
-function ll { l -l --blocks 'permission,size,date,name' --date '+%Y-%m-%d %H:%M' @args }
+function l  { lsd @args }
+function la { lsd -a @args }
+function ll { lsd -la --blocks 'permission,size,date,name' --date '+%Y-%m-%d %H:%M' @args }

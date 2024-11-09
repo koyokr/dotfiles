@@ -7,6 +7,6 @@ if status is-interactive
     alias la 'lsd -a'
     alias ll 'lsd -al --date +"%Y-%m-%d %H:%M"'
 
-    alias cosh  'gh copilot suggest -t shell'
-    alias cogit 'gh copilot suggest -t git'
+    alias ghcs  'gh copilot suggest -t shell'
+    alias ghce 'gh copilot suggest -t git'
 end

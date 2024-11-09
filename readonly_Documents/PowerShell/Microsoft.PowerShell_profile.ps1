@@ -16,5 +16,6 @@ function l  { lsd @args }
 function la { lsd -a @args }
 function ll { lsd -la --blocks 'permission,size,date,name' --date '+%Y-%m-%d %H:%M' @args }
 
-function cosh  { gh copilot suggest -t shell @args }
-function cogit { gh copilot suggest -t git @args }
+# gh copilot
+$GH_COPILOT_PROFILE = Join-Path -Path $(Split-Path -Path $PROFILE -Parent) -ChildPath "gh-copilot.ps1"
+. $GH_COPILOT_PROFILE

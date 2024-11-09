@@ -1,0 +1,12 @@
+README.md
+bootstrap.ps1
+
+{{- if ne .chezmoi.os "windows" }}
+AppData
+Documents
+scoop
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+.config/fish
+{{- end }}

@@ -1,22 +1,6 @@
 # Set execution policy to allow script execution
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
-# Configure Windows Explorer settings
-Write-Host 'Configuring Windows Explorer settings...'
-# Show file extensions
-Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -Value 0
-# Show hidden files
-Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden' -Value 1
-
-# Disable search box suggestions
-Write-Host 'Disabling search box suggestions...'
-New-Item -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Force | Out-Null
-Set-ItemProperty -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Name 'DisableSearchBoxSuggestions' -Value 1 -Type DWord
-
-# Remove MAX_PATH limit
-Write-Host 'Removing MAX_PATH length limit...'
-New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force
-
 # Install packages using winget
 $wingetPackages = @(
     'Bandisoft.BandiView',
@@ -50,6 +34,7 @@ $scoopPackages = @(
     'aria2',
     'base64',
     'bat',
+    'chezmoi',
     'croc',
     'curl',
     'delta',
@@ -79,6 +64,41 @@ $scoopPackages = @(
 
 Write-Host 'Installing applications using Scoop...'
 scoop install $scoopPackages
+
+# Configure Windows Explorer settings
+Write-Host 'Configuring Windows Explorer settings...'
+# Show file extensions
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -Value 0
+# Show hidden files
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden' -Value 1
+# Disable frequently used folders
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'NavPaneShowAllFolders' -Value 0
+# Disable account-based insights
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
+
+# Configure Snap layouts and multitasking settings
+Write-Host 'Configuring snap layouts and multitasking settings...'
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout' -Value 0
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapBar' -Value 0
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'SnapAssist' -Value 0
+
+# Enable clipboard history
+Write-Host 'Enabling clipboard history...'
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Clipboard' -Name 'EnableClipboardHistory' -Value 1
+
+# Remove MAX_PATH limit
+Write-Host 'Removing MAX_PATH length limit...'
+gsudo New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force
+
+# Disable search box suggestions
+Write-Host 'Disabling search box suggestions...'
+gsudo New-Item -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Force | Out-Null
+gsudo Set-ItemProperty -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Name 'DisableSearchBoxSuggestions' -Value 1 -Type DWord
+
+# Remove Windows Features
+Write-Host 'Removing Windows Features...'
+Disable-WindowsOptionalFeature -Online -FeatureName "SMB1Protocol" -NoRestart
+Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2" -NoRestart
 
 # Restart Explorer to apply changes
 Stop-Process -Name explorer -Force

@@ -3,6 +3,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
 # Install packages using winget
 $wingetPackages = @(
+    'Microsoft.VCRedist.2015+.x64',
     'Bandisoft.BandiView',
     'Bandisoft.Bandizip',
     'CondaForge.Miniforge3',

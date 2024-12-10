@@ -4,6 +4,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 # Install packages using winget
 $wingetPackages = @(
     'Microsoft.VCRedist.2015+.x64',
+    'Microsoft.VCRedist.2015+.x86',
     'Bandisoft.BandiView',
     'Bandisoft.Bandizip',
     'CondaForge.Miniforge3',
@@ -78,6 +79,12 @@ Write-Host 'Configuring snap layouts and multitasking settings...'
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout' -Value 0
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapBar' -Value 0
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'SnapAssist' -Value 0
+
+# Configure taskbar settings
+Write-Host 'Configuring taskbar settings...'
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value 1
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarDa" -Value 0
 
 # Configure system tray clock (24-hour format with seconds)
 Write-Host 'Configuring system tray clock format...'

@@ -106,8 +106,8 @@ gsudo Set-ItemProperty -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer
 
 # Remove Windows Features
 Write-Host 'Removing Windows Features...'
-Disable-WindowsOptionalFeature -Online -FeatureName "SMB1Protocol" -NoRestart
-Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2" -NoRestart
+gsudo Disable-WindowsOptionalFeature -Online -FeatureName "SMB1Protocol" -NoRestart
+gsudo Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2" -NoRestart
 
 # Restart Explorer to apply changes
 Stop-Process -Name explorer -Force

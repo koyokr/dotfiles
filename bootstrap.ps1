@@ -6,7 +6,6 @@ $wingetPackages = @(
     'Microsoft.VCRedist.2015+.x64',
     'Microsoft.VCRedist.2015+.x86',
     'Bandisoft.BandiView',
-    'Bandisoft.Bandizip',
     'CondaForge.Miniforge3',
     'DigitalScholar.Zotero',
     'Microsoft.PowerShell',
@@ -76,9 +75,9 @@ Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 # Configure Snap layouts and multitasking settings
 Write-Host 'Configuring snap layouts and multitasking settings...'
-Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout' -Value 0
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapBar' -Value 0
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'SnapAssist' -Value 0
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'DisablePreviewWindow' -Value 1
 
 # Configure taskbar settings
 Write-Host 'Configuring taskbar settings...'

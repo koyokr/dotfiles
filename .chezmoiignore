@@ -1,5 +1,6 @@
 README.md
 bootstrap.ps1
+bootstrap.sh
 
 {{- if ne .chezmoi.os "windows" }}
 AppData

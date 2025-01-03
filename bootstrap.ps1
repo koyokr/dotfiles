@@ -87,12 +87,12 @@ gsudo {
     # Remove MAX_PATH limit
     Write-Host 'Removing MAX_PATH length limit...'
     New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force
-    
+
     # Disable search box suggestions
     Write-Host 'Disabling search box suggestions...'
     New-Item -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Force | Out-Null
     Set-ItemProperty -Path 'HKCU:\Software\Policies\Microsoft\Windows\Explorer' -Name 'DisableSearchBoxSuggestions' -Value 1 -Type DWord
-    
+
     # Remove Windows Features
     Write-Host 'Removing Windows Features...'
     Disable-WindowsOptionalFeature -Online -FeatureName 'SMB1Protocol' -NoRestart
@@ -109,7 +109,7 @@ gsudo {
         'Microsoft.VisualStudioCode',
         'Obsidian.Obsidian'
     )
-    
+
     Write-Host 'Installing applications using winget...'
     winget install $wingetPackages --accept-source-agreements --accept-package-agreements --no-upgrade --silent
 }

@@ -1,5 +1,2 @@
 [conda]
 ignore_base = false
-
-[container]
-disabled = true

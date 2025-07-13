@@ -11,6 +11,8 @@
 [diff]
 	algorithm = histogram
 	colorMoved = default
+[gpg]
+	program = gpg2
 [init]
 	defaultBranch = main
 [interactive]

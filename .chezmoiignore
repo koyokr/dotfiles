@@ -5,6 +5,7 @@ bootstrap.sh
 {{- if ne .chezmoi.os "windows" }}
 AppData
 Documents
+OneDrive
 scoop
 {{- end }}
 

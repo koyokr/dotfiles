@@ -3,12 +3,15 @@ bootstrap.ps1
 bootstrap.sh
 
 {{- if ne .chezmoi.os "windows" }}
-AppData
-Documents
-OneDrive
-scoop
+AppData/
+Documents/
+scoop/
+{{- else }}
+{{-   if contains "OneDrive" (output "powershell" "-NoProfile" "-Command" "[Environment]::GetFolderPath('MyDocuments')") }}
+Documents/
+{{-   end }}
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
-.config/fish
+.config/fish/
 {{- end }}

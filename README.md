@@ -1,22 +1,15 @@
 # dotfiles
 
-## Installation
-
-### 1. Bootstrap
+## Apply
 
 **Linux**
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/koyokr/dotfiles/main/bootstrap.sh)"
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --one-shot koyokr
 ```
 
 **Windows**
 
 ```powershell
-irm https://raw.githubusercontent.com/koyokr/dotfiles/main/bootstrap.ps1 | iex
-```
-
-### 2. Apply
-```sh
-chezmoi init --apply https://github.com/koyokr/dotfiles.git
+iex "&{$(irm 'https://get.chezmoi.io/ps1')} init --one-shot koyokr"
 ```

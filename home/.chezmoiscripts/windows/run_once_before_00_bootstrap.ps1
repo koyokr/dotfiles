@@ -55,17 +55,16 @@ scoop install `
     sysinternals `
     temurin-lts-jre
 
-gsudo {
-    # Set Syncthing to start automatically
-    Write-Host 'Setting syncthing to start automatically...'
-    Register-ScheduledTask `
-       -TaskName "Syncthing" `
-       -Action (New-ScheduledTaskAction -Execute "$HOME\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $HOME) `
-       -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME) `
-       -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) `
-       -Principal (New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Password -RunLevel Limited)
-    Start-ScheduledTask -TaskName "Syncthing"
+# Set Syncthing to start automatically
+Write-Host 'Setting syncthing to start automatically...'
+Register-ScheduledTask `
+    -TaskName "Syncthing" `
+    -Action (New-ScheduledTaskAction -Execute "$HOME\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $HOME) `
+    -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME) `
+    -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) `
+Start-ScheduledTask -TaskName "Syncthing"
 
+gsudo {
     # Install winget packages
     Write-Host 'Installing winget applications...'
     winget install --accept-source-agreements --accept-package-agreements --no-upgrade --silent `

@@ -1,4 +1,12 @@
-{{ if eq .chezmoi.os "windows" -}}
+# Self-elevate if not admin
+if (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
+    Start-Process PowerShell.exe -Verb RunAs -ArgumentList "-File `"$($MyInvocation.MyCommand.Path)`"", $MyInvocation.UnboundArguments -Wait
+    Exit
+}
+Import-Module Microsoft.PowerShell.Security
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
 # Install Scoop if not already installed
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host 'Installing Scoop...'
@@ -52,7 +60,7 @@ gsudo {
     Write-Host 'Setting syncthing to start automatically...'
     Register-ScheduledTask `
        -TaskName "Syncthing" `
-       -Action (New-ScheduledTaskAction -Execute "$env:USERPROFILE\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $env:USERPROFILE) `
+       -Action (New-ScheduledTaskAction -Execute "$HOME\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $HOME) `
        -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME) `
        -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) `
        -Principal (New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Password -RunLevel Limited)
@@ -74,4 +82,3 @@ gsudo {
 }
 
 Write-Host 'Installation complete!'
-{{ end -}}

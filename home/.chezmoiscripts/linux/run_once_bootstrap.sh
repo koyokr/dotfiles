@@ -1,4 +1,3 @@
-{{ if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 
 # Check if running as root on Arch Linux.
@@ -45,4 +44,3 @@ else
     echo "This script must be run as root on Arch Linux."
     exit 1
 fi
-{{ end -}}

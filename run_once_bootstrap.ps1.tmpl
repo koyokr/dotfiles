@@ -5,21 +5,69 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 }
 
-# Add Scoop buckets
-Write-Host 'Adding Scoop buckets...'
-scoop install git
+# Install scoop packages from main bucket
+Write-Host 'Installing scoop packages from main bucket...'
+scoop install `
+    base64 `
+    bat `
+    chezmoi `
+    croc `
+    delta `
+    fd `
+    ffmpeg `
+    fzf `
+    git `
+    gpg `
+    gsudo `
+    hexyl `
+    lsd `
+    openssh `
+    openssl `
+    python `
+    ripgrep `
+    scoop-search `
+    sd `
+    starship `
+    syncthing `
+    uv `
+    wget `
+    yt-dlp `
+    zoxide
+
+# Install scoop packages from extras bucket
+Write-Host 'Installing scoop packages from extras bucket...'
 scoop bucket add extras
 scoop bucket add java
 scoop bucket add nerd-fonts
-
-# Install packages using Scoop
-Write-Host 'Installing applications using Scoop...'
-scoop install base64 bat chezmoi croc delta Delugia-Mono-Nerd-Font-Complete fd ffmpeg fzf gpg gsudo hexyl lsd mpv openssh openssl picocrypt psfzf python ripgrep scoop-search sd starship sysinternals wget yt-dlp zoxide
+scoop install `
+    Delugia-Mono-Nerd-Font-Complete `
+    mpv-git `
+    picocrypt `
+    psfzf `
+    sysinternals `
+    temurin-lts-jre
 
 gsudo {
-    # Install packages using winget
-    Write-Host 'Installing applications using winget...'
-    winget install Microsoft.VCRedist.2015+.x64 Microsoft.VCRedist.2015+.x86 CondaForge.Miniforge3 Microsoft.PowerShell Microsoft.PowerToys Microsoft.VisualStudioCode Obsidian.Obsidian --accept-source-agreements --accept-package-agreements --no-upgrade --silent
+    # Set Syncthing to start automatically
+    Write-Host 'Setting syncthing to start automatically...'
+    Register-ScheduledTask `
+       -TaskName "Syncthing" `
+       -Action (New-ScheduledTaskAction -Execute "$env:USERPROFILE\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $env:USERPROFILE) `
+       -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME) `
+       -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) `
+       -Principal (New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Password -RunLevel Limited)
+    Start-ScheduledTask -TaskName "Syncthing"
+
+    # Install winget packages
+    Write-Host 'Installing winget applications...'
+    winget install --accept-source-agreements --accept-package-agreements --no-upgrade --silent `
+        Microsoft.VCRedist.2015+.x64 `
+        Microsoft.VCRedist.2015+.x86 `
+        CondaForge.Miniforge3 `
+        Microsoft.PowerShell `
+        Microsoft.PowerToys `
+        Microsoft.VisualStudioCode `
+        M2Team.NanaZip Obsidian.Obsidian
 
     # Run Winutil
     Invoke-RestMethod -Uri https://christitus.com/win | Invoke-Expression

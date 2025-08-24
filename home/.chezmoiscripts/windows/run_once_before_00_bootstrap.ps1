@@ -61,8 +61,7 @@ Register-ScheduledTask `
     -TaskName "Syncthing" `
     -Action (New-ScheduledTaskAction -Execute "$HOME\scoop\apps\syncthing\current\syncthing.exe" -Argument "--no-console --no-browser" -WorkingDirectory $HOME) `
     -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME) `
-    -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) `
-Start-ScheduledTask -TaskName "Syncthing"
+    -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0)
 
 gsudo {
     # Install winget packages

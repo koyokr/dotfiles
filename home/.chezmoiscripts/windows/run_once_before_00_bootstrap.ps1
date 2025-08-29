@@ -1,16 +1,9 @@
-# Self-elevate if not admin
-if (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')) {
-    Start-Process PowerShell.exe -Verb RunAs -ArgumentList "-File `"$($MyInvocation.MyCommand.Path)`"", $MyInvocation.UnboundArguments -Wait
-    Exit
-}
-Import-Module Microsoft.PowerShell.Security
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # Install Scoop if not already installed
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host 'Installing Scoop...'
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    Start-Process powershell -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "iwr -useb get.scoop.sh | iex" -Wait -NoNewWindow
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","User") + ";" + [System.Environment]::GetEnvironmentVariable("Path","Machine")
 }
 
 # Install scoop packages from main bucket

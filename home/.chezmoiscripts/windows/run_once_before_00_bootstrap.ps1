@@ -22,9 +22,9 @@ scoop install `
     gsudo `
     hexyl `
     lsd `
-    openssh `
     openssl `
     python `
+    qpdf `
     ripgrep `
     scoop-search `
     sd `
@@ -45,8 +45,7 @@ scoop install `
     mpv-git `
     picocrypt `
     psfzf `
-    sysinternals `
-    temurin-lts-jre
+    temurin-lts-jdk
 
 # Set Syncthing to start automatically
 Write-Host 'Setting syncthing to start automatically...'
@@ -62,11 +61,11 @@ gsudo {
     winget install --accept-source-agreements --accept-package-agreements --no-upgrade --silent `
         Microsoft.VCRedist.2015+.x64 `
         Microsoft.VCRedist.2015+.x86 `
-        CondaForge.Miniforge3 `
         Microsoft.PowerShell `
         Microsoft.PowerToys `
         Microsoft.VisualStudioCode `
-        M2Team.NanaZip Obsidian.Obsidian
+        CondaForge.Miniforge3 `
+        Obsidian.Obsidian
 
     # Run Winutil
     Invoke-RestMethod -Uri https://christitus.com/win | Invoke-Expression

@@ -1,32 +1,41 @@
 #!/bin/sh
+set -eu
 
-# Check if running as root on Arch Linux.
-if [ -f /etc/os-release ] && grep -q 'ID=arch' /etc/os-release && [ "$(id -u)" -eq 0 ]; then
+# Runs as the regular user (chezmoi context).
+# chezmoi targets $HOME, so root execution would write to /root and miss the
+# actual user. sudo is invoked only for the system-level bits.
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Refusing to run as root. Run as your normal user; sudo is used where needed." >&2
+    exit 1
+fi
 
-    # 1. Get username.
-    read -p "Enter the username to create: " USERNAME
-    if [ -z "${USERNAME}" ]; then
-        echo "Username cannot be empty."
-        exit 1
+# Detect distro via /etc/os-release ID field.
+distro=""
+if [ -f /etc/os-release ]; then
+    distro=$(. /etc/os-release && echo "$ID")
+fi
+
+# Distro-specific setup.
+if [ "$distro" = "arch" ]; then
+    # 1. Sync and install packages.
+    sudo pacman --noconfirm --quiet -Syu
+    sudo pacman --noconfirm --quiet -S --needed \
+        bat chezmoi croc fd fish fzf git git-delta helix hexyl \
+        less ripgrep sd starship zoxide
+
+    # 2. Ensure login shell is fish.
+    current_shell=$(getent passwd "$USER" | cut -d: -f7)
+    if [ "$current_shell" != /usr/bin/fish ]; then
+        sudo chsh -s /usr/bin/fish "$USER"
     fi
+else
+    echo "Unsupported distro: ${distro:-unknown}" >&2
+    exit 1
+fi
 
-    # 2. Install packages.
-    pacman --noconfirm --quiet -Syu
-    pacman --noconfirm --quiet -S --needed bat chezmoi croc fd fish fzf git git-delta helix hexyl less ripgrep sd starship sudo zoxide
-
-    # 3. Configure sudoers.
-    echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/10-wheel-nopasswd
-    chmod 0440 /etc/sudoers.d/10-wheel-nopasswd
-
-    # 4. Create user if it doesn't exist.
-    if ! id "${USERNAME}" >/dev/null 2>&1; then
-        useradd -m -G wheel -s /usr/bin/fish "${USERNAME}"
-    fi
-
-    # 5. Configure for WSL if applicable.
-    # Check if the kernel release string contains "WSL".
-    if uname -r | grep -q 'WSL'; then
-        cat > /etc/wsl.conf <<EOF
+# WSL-specific configuration (distro-independent).
+if uname -r | grep -q 'WSL'; then
+    sudo tee /etc/wsl.conf >/dev/null <<EOF
 [boot]
 systemd=true
 
@@ -34,13 +43,8 @@ systemd=true
 appendWindowsPath=false
 
 [user]
-default=${USERNAME}
+default=$USER
 EOF
-    fi
-
-    echo "Setup complete for user ${USERNAME}."
-
-else
-    echo "This script must be run as root on Arch Linux."
-    exit 1
 fi
+
+echo "Setup complete for $USER."

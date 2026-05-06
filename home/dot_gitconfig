@@ -3,6 +3,7 @@
 [core]
 	quotePath = false
 	pager = delta
+	longpaths = true
 [credential "helperselector"]
 	selected = manager
 [delta]

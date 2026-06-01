@@ -6,23 +6,30 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","User") + ";" + [System.Environment]::GetEnvironmentVariable("Path","Machine")
 }
 
-# Install scoop packages from main bucket
-Write-Host 'Installing scoop packages from main bucket...'
+# Install scoop packages
+Write-Host 'Installing scoop packages'
+scoop install git
+scoop bucket add extras
+scoop bucket add java
+scoop bucket add nerd-fonts
 scoop install `
+    adb `
     base64 `
     bat `
     chezmoi `
     croc `
-    delta `
+    cyberchef `
+    Delugia-Mono-Nerd-Font-Complete `
     fd `
     ffmpeg `
     fzf `
-    git `
     gpg `
     gsudo `
     hexyl `
     lsd `
+    mpv-git `
     openssl `
+    psfzf `
     python `
     qpdf `
     ripgrep `
@@ -30,22 +37,11 @@ scoop install `
     sd `
     starship `
     syncthing `
+    temurin-lts-jdk `
     uv `
     wget `
     yt-dlp `
     zoxide
-
-# Install scoop packages from extras bucket
-Write-Host 'Installing scoop packages from extras bucket...'
-scoop bucket add extras
-scoop bucket add java
-scoop bucket add nerd-fonts
-scoop install `
-    Delugia-Mono-Nerd-Font-Complete `
-    mpv-git `
-    picocrypt `
-    psfzf `
-    temurin-lts-jdk
 
 # Set Syncthing to start automatically
 Write-Host 'Setting syncthing to start automatically...'
@@ -64,7 +60,6 @@ gsudo {
         Microsoft.PowerShell `
         Microsoft.PowerToys `
         Microsoft.VisualStudioCode `
-        CondaForge.Miniforge3 `
         Obsidian.Obsidian
 
     # Run Winutil

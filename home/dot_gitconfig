@@ -2,13 +2,9 @@
 	gpgsign = true
 [core]
 	quotePath = false
-	pager = delta
 	longpaths = true
 [credential "helperselector"]
 	selected = manager
-[delta]
-	navigate = true
-	light = false
 [diff]
 	algorithm = histogram
 	colorMoved = default
@@ -16,8 +12,6 @@
 	program = gpg2
 [init]
 	defaultBranch = main
-[interactive]
-	diffFilter = delta --color-only
 [merge]
 	conflictstyle = diff3
 [pull]

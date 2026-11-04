@@ -17,4 +17,5 @@ Documents/
 .chezmoiscripts/linux/**
 .config/fish/
 .claude/statusline.sh
+.claude/settings.json
 {{- end }}

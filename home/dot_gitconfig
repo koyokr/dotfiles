@@ -1,5 +1,5 @@
 [commit]
-	gpgsign = true
+	gpgsign = false
 [core]
 	quotePath = false
 	longpaths = true
@@ -23,3 +23,9 @@
 	email = koyo@koyo.kr
 	name = Younghun Ko
 	signingkey = 37DE987257F6ECAC
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

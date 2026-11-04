@@ -1,0 +1,25 @@
+# Global Preferences
+
+These are defaults. Project instructions, configs, scripts, and lockfiles take precedence over anything here.
+
+## Working rules
+
+- Prefer reusing, consolidating, or deleting over adding, but never at the cost of readability.
+- When a correction reveals a mistake likely to recur in other tasks, propose one change to prevent it: a CLAUDE.md edit, or a hook or permission rule if code can enforce it. Skip corrections specific to the current task.
+- Don't use `sudo`, modify system packages, or install anything globally unless I ask, so that changes stay scoped to the project and can be reproduced. Use project-local dependencies and tools instead.
+- `/tmp` is RAM-backed: small temp files are fine there, but keep large files and caches in `~/.cache`.
+- Use the latest standard language and library features the project's target version supports.
+
+## Shell tools
+
+In the shell, use `ast-grep` for structural code search and `rg` for plain text. Prefer `fd` (finding files) and `jq`/`yq`/`htmlq` (structured data).
+
+## Python
+
+- Follow the project's existing tooling. With none, use `uv`, plus `ruff`, `ty`, and `pytest` (via `uv run`) as needed.
+- `uv.lock` is authoritative unless the task is updating dependencies. Use PEP 723 inline metadata for standalone scripts that have dependencies.
+- Use the stdlib and existing dependencies before adding new ones.
+
+## Shell scripts
+
+- Check Bash scripts with `shellcheck` and `shfmt -d`.

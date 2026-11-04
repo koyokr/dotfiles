@@ -20,7 +20,7 @@ if [ "$distro" = "arch" ]; then
     # 1. Sync and install packages.
     sudo pacman --noconfirm --quiet -Syu
     sudo pacman --noconfirm --quiet -S --needed \
-        bat chezmoi croc fd fish fzf git git-delta helix hexyl \
+        bat chezmoi croc fd fish fzf git helix hexyl jq \
         less ripgrep sd starship zoxide
 
     # 2. Ensure login shell is fish.

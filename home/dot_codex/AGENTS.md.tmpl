@@ -5,9 +5,13 @@ These are defaults. Project instructions, configs, scripts, and lockfiles take p
 ## Working rules
 
 - Prefer reusing, consolidating, or deleting over adding, but never at the cost of readability.
-- When a correction reveals a mistake likely to recur in other tasks, propose one change to prevent it: a CLAUDE.md edit, or a hook or permission rule if code can enforce it. Skip corrections specific to the current task.
+- When a correction reveals a mistake likely to recur in other tasks, propose one change to prevent it: an AGENTS.md edit, or a hook or permission rule if code can enforce it. Skip corrections specific to the current task.
+{{ if eq .chezmoi.os "windows" -}}
+- Don't elevate (`gsudo`) or install anything (scoop, winget, `npm -g`) unless I ask, so that changes stay scoped to the project and can be reproduced. Use project-local dependencies and tools instead.
+{{ else -}}
 - Don't use `sudo`, modify system packages, or install anything globally unless I ask, so that changes stay scoped to the project and can be reproduced. Use project-local dependencies and tools instead.
 - `/tmp` is RAM-backed: small temp files are fine there, but keep large files and caches in `~/.cache`.
+{{ end -}}
 - Use the latest standard language and library features the project's target version supports.
 
 ## Shell tools
